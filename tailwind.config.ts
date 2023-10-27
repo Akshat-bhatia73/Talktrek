@@ -8,13 +8,24 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      screens: {
+        "xs": "450px"
       },
+      keyframes: {
+        "pop": {
+          "0%": {scale: "0.5"},
+          "100%": {scale: "1"},
+        }
+      },
+      animation: {
+        "pop": "pop 0.4s ease-in-out"
+      }
     },
   },
-  plugins: [],
+  plugins: [
+    require("@tailwindcss/forms")({
+      strategy: "class"
+    })
+  ],
 }
 export default config
