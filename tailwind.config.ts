@@ -15,10 +15,15 @@ const config: Config = {
         "pop": {
           "0%": {scale: "0.5"},
           "100%": {scale: "1"},
-        }
+        },
+        "fade-in": {
+          "0%": {opacity: "0"},
+          "100%": {opacity: "100%"}
+        },
       },
       animation: {
-        "pop": "pop 0.4s ease-in-out"
+        "pop": "pop 0.4s ease-in-out",
+        "fade-in": "fade-in 0.2s ease-in-out",
       }
     },
   },
