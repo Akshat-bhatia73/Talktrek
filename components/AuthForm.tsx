@@ -1,27 +1,24 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import axios from "axios";
+import { useCallback, useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 import { RiGithubFill } from "react-icons/ri";
 import AuthSocialButton from "./AuthSocialButton";
 import Button from "./Button";
 import Input from "./Input";
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 type Variant = "LOGIN" | "REGISTER";
 
 const AuthForm = () => {
+  const session = useSession();
+  const router = useRouter();
   const [variant, setVariant] = useState<Variant>("LOGIN");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const toggleVariant = useCallback(() => {
-    if (variant === "LOGIN") {
-      setVariant("REGISTER");
-    } else {
-      setVariant("LOGIN");
-    }
-  }, [variant]);
-
   const {
     register,
     handleSubmit,
@@ -34,22 +31,60 @@ const AuthForm = () => {
     },
   });
 
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      router.push("/users");
+    }
+  }, [session.status, router]);
+
+  const toggleVariant = useCallback(() => {
+    if (variant === "LOGIN") {
+      setVariant("REGISTER");
+    } else {
+      setVariant("LOGIN");
+    }
+  }, [variant]);
+
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
 
     if (variant === "REGISTER") {
       // Axios Register
+      axios
+        .post("/api/register", data)
+        .then(() => signIn("credentials", data))
+        .catch(() => toast.error("Something went wrong"))
+        .finally(() => setIsLoading(false));
     } else if (variant === "LOGIN") {
       //Next Auth SignIn
+      signIn("credentials", {
+        ...data,
+        redirect: false,
+      })
+        .then((callback) => {
+          if (callback?.error) {
+            toast.error("Invalid credentials");
+          } else if (callback?.ok && !callback.error) {
+            toast.success(`Welcome`);
+            router.push("/users");
+          }
+        })
+        .finally(() => setIsLoading(false));
     }
-
-    setIsLoading(false);
   };
 
   const socialAction = (action: string) => {
     setIsLoading(true);
     // Next Auth Social Signin
-    setIsLoading(false);
+    signIn(action, { redirect: false })
+      .then((callback) => {
+        if (callback?.error) {
+          toast.error("Invalid Credentials");
+        } else if (callback?.ok && !callback?.error) {
+          toast.success("Welcome");
+        }
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (
@@ -92,7 +127,7 @@ const AuthForm = () => {
         />
         <div className=" py-3">
           <Button
-            type="button"
+            type="submit"
             fullWidth
             isLoading={isLoading}
             disabled={isLoading}
