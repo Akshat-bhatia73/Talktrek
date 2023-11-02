@@ -21,6 +21,7 @@ const MobileFooter = () => {
         border-t-[1px]
         border-neutral-700/70
         text-neutral-100
+        animate-fade-in
       "
     >
       {routes.map((item) => {
