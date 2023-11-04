@@ -10,6 +10,7 @@ interface ButtonProps {
   danger?: boolean;
   disabled?: boolean;
   isLoading?: boolean;
+  className?:string
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -21,6 +22,7 @@ const Button: React.FC<ButtonProps> = ({
   danger,
   disabled,
   isLoading,
+  className
 }) => {
   return (
     <button
@@ -42,8 +44,9 @@ const Button: React.FC<ButtonProps> = ({
         secondary
           ? "text-neutral-900 border-2 hover:bg-neutral-300/20"
           : "text-neutral-100",
-        danger && "bg-red-600 hover:bg-red-500",
-        !secondary && !danger && "bg-blue-700 hover:bg-blue-600"
+        danger && "bg-red-400/20 text-red-400 hover:opacity-75",
+        !secondary && !danger && "bg-blue-700 hover:bg-blue-600",
+        className
       )}
     >
       {isLoading ? "Loading..." : children}

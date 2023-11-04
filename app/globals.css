@@ -13,3 +13,15 @@ body,
     @apply bg-gradient-to-bl from-purple-700 via-pink-700 via-red-500 via-orange-600 to-yellow-500
   }
 }
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(70, 70, 70)
+}

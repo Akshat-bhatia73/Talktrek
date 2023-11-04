@@ -30,7 +30,9 @@ const Header: React.FC<HeaderProps> = ({ conversation }) => {
       <ProfileDrawer
         data={conversation}
         isOpen={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
+        onClose={() => {
+          setDrawerOpen(false);
+        }}
       />
       <div
         className="
@@ -74,7 +76,9 @@ const Header: React.FC<HeaderProps> = ({ conversation }) => {
           rounded-xl hover:rounded-md 
           transition-all
         "
-          onClick={() => {}}
+          onClick={() => {
+            setDrawerOpen(true);
+          }}
         >
           <RiMoreFill size={25} />
         </div>

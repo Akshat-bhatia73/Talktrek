@@ -8,11 +8,12 @@ interface InputProps {
   label: string;
   id: string;
   type?: string;
-  required?: string;
+  required?: boolean;
   register: UseFormRegister<FieldValues>;
   errors: FieldErrors;
   disabled?: boolean;
   placeholder?: string;
+  darkMode?: boolean;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -24,15 +25,19 @@ const Input: React.FC<InputProps> = ({
   errors,
   disabled,
   placeholder,
+  darkMode,
 }) => {
   return (
-    <div className="space-y-2 font-bold animate-pop">
+    <div className="space-y-2 font-medium animate-pop">
       <label
         htmlFor={id}
-        className="
+        className={clsx(
+          `
           w-fit
-          text-sm leading-6 text-neutral-800
-        "
+          text-sm leading-6
+        `,
+          darkMode ? "text-neutral-200" : "text-neutral-800"
+        )}
       >
         {label}
       </label>
@@ -49,14 +54,25 @@ const Input: React.FC<InputProps> = ({
             w-full
             rounded-xl
             px-1 py-2
-            outline-none
-            border border-400/10
-            focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:rounded-md
-            bg-white disabled:cursor-default disabled:bg-neutral-700/10
-            text-neutral-800 text-sm
-            placeholder:font-medium
+            outline-none focus:outline-none foucs:border-none
+            border 
+            disabled:cursor-default 
+            text-sm
             transition-all
           `,
+            darkMode
+              ? `
+              px-3
+              bg-neutral-800 disabled:bg-neutral-700
+              text-neutral-100
+              border-neutral-700/70
+              `
+              : `
+              bg-white disabled:bg-neutral-700/10
+              text-neutral-800
+              border-neutral-400/10
+              focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:rounded-md
+              `,
             errors[id] && "focus:ring-red-500"
           )}
         />
