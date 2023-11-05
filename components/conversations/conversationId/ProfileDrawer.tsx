@@ -9,6 +9,7 @@ import { format } from "date-fns";
 import { Fragment, useMemo, useState } from "react";
 import { RiCloseLine, RiDeleteBin4Fill } from "react-icons/ri";
 import ConfirmModal from "./ConfirmModal";
+import AvatarGroup from "../AvatarGroup";
 
 interface ProfileDrawerProps {
   data: Conversation & {
@@ -149,7 +150,11 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                       >
                         <div className="flex flex-col items-center">
                           <div className="mb-2">
-                            <Avatar user={otherUser} />
+                            {data.isGroup ? (
+                              <AvatarGroup users={data.users} />
+                            ) : (
+                              <Avatar user={otherUser} />
+                            )}
                           </div>
                           <div className="text-neutral-100">{title}</div>
                           <div className="text-sm text-neutral-400 font-light">
@@ -192,6 +197,31 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                             "
                           >
                             <dl className="space-y-8 sm:space-y-6 px-4">
+                              {data.isGroup && (
+                                <div>
+                                  <dt
+                                    className="
+                                      text-sm font-medium text-neutral-200 sm:w-40 sm:flex-shrink-0
+                                    "
+                                  >
+                                    Members
+                                  </dt>
+                                  {data.users.map((user) => {
+                                    return (
+                                      <dd
+                                        key={user.id}
+                                        className="mt-2 flex gap-2 items-center text-sm text-neutral-100 sm:col-span-2"
+                                      >
+                                        <Avatar user={user} />
+                                        <div>
+                                          <h2 className="">{user.name}</h2>
+                                          <p className="text-xs text-neutral-300 font-light">{user.email}</p>
+                                        </div>
+                                      </dd>
+                                    );
+                                  })}
+                                </div>
+                              )}
                               {!data.isGroup && (
                                 <div>
                                   <dt className="text-sm font-medium text-neutral-400 sm:w-40 sm:flex-shrink-0">

@@ -81,7 +81,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                 errors={errors}
                 required
                 darkMode={true}
-                placeholder={currentUser.name || "name"}
+                placeholder={currentUser.name || "Enter your name"}
               />
               <div>
                 <label

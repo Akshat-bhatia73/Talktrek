@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { RiArrowLeftLine, RiMoreFill } from "react-icons/ri";
 import ProfileDrawer from "./ProfileDrawer";
+import AvatarGroup from "../AvatarGroup";
 
 interface HeaderProps {
   conversation: Conversation & {
@@ -58,7 +59,13 @@ const Header: React.FC<HeaderProps> = ({ conversation }) => {
           >
             <RiArrowLeftLine size={25} />
           </Link>
-          <Avatar user={otherUser} />
+          
+          {conversation.isGroup ? (
+            <AvatarGroup users={conversation.users} />
+          ) : (
+            <Avatar user={otherUser} />
+          )}
+
           <div className="flex flex-col">
             <div className="font-semibold text-sm xs:text-base">
               {conversation.name || otherUser.name}
