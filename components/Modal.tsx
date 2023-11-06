@@ -1,7 +1,7 @@
 "use client";
 
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, MouseEventHandler } from "react";
+import { Fragment } from "react";
 import { RiCloseLine } from "react-icons/ri";
 
 interface ModalProps {
@@ -58,7 +58,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
                 text-left 
                 rounded-xl 
                 shadow-xl
-                w-full sm:w-full sm:max-w-lg
+                w-full sm:max-w-lg
                 sm:my-8
                 transition-all
               "

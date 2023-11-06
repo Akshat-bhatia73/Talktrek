@@ -4,10 +4,10 @@ import Avatar from "@/components/Avatar";
 import useOtherUser from "@/hooks/useOtherUser";
 import { Conversation, User } from "@prisma/client";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { RiArrowLeftLine, RiMoreFill } from "react-icons/ri";
-import ProfileDrawer from "./ProfileDrawer";
 import AvatarGroup from "../AvatarGroup";
+import ProfileDrawer from "./ProfileDrawer";
 
 interface HeaderProps {
   conversation: Conversation & {
@@ -19,13 +19,6 @@ const Header: React.FC<HeaderProps> = ({ conversation }) => {
   const otherUser = useOtherUser(conversation);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  const statusText = useMemo(() => {
-    if (conversation.isGroup) {
-      return `${conversation.users.length} members`;
-    }
-
-    return "Active";
-  }, [conversation]);
   return (
     <>
       <ProfileDrawer
@@ -59,20 +52,14 @@ const Header: React.FC<HeaderProps> = ({ conversation }) => {
           >
             <RiArrowLeftLine size={25} />
           </Link>
-          
+
           {conversation.isGroup ? (
             <AvatarGroup users={conversation.users} />
           ) : (
             <Avatar user={otherUser} />
           )}
-
-          <div className="flex flex-col">
-            <div className="font-semibold text-sm xs:text-base">
-              {conversation.name || otherUser.name}
-            </div>
-            <div className="font-light text-neutral-400 text-xs xs:text-sm">
-              {statusText}
-            </div>
+          <div className="font-semibold text-sm xs:text-lg">
+            {conversation.name || otherUser.name}
           </div>
         </div>
         <div

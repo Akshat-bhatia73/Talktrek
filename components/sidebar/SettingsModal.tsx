@@ -1,16 +1,16 @@
 "use client";
 
 import { User } from "@prisma/client";
-import Modal from "../Modal";
+import axios from "axios";
+import { CldUploadButton } from "next-cloudinary";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import axios from "axios";
 import toast from "react-hot-toast";
-import Input from "../Input";
-import Image from "next/image";
-import { CldUploadButton } from "next-cloudinary";
 import Button from "../Button";
+import Input from "../Input";
+import Modal from "../Modal";
 
 interface SettingsModalProps {
   currentUser: User;
@@ -66,7 +66,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="space-y-12">
           <div className="border-b border-neutral-700/70 pb-12">
-            <h2 className="text-base font-semibold leading-6 text-neutral-100">
+            <h2 className="text-base font-semibold leading-6 pt-6 sm:pt-0 text-neutral-100">
               Profile
             </h2>
             <p className="mt-1 text-sm font-medium text-neutral-400">
@@ -115,7 +115,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
             className="
               mt-6
               flex items-center justify-end
-              gap-x-6
+              gap-x-2
             "
           >
             <Button
@@ -126,11 +126,8 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
             >
               Cancel
             </Button>
-            <Button
-              disabled={isLoading}
-              type="submit"
-            >
-              Save Changes
+            <Button disabled={isLoading} type="submit">
+              Save <span className="hidden xs:block ml-1">Changes</span>
             </Button>
           </div>
         </div>

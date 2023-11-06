@@ -72,7 +72,7 @@ const ConfirmModal: React.FC<ConfirModalProps> = ({ isOpen, onClose }) => {
       <div
         className="
           mt-5 sm:mt-4
-          sm:flex sm:flex-row-reverse sm:gap-2 space-y-2 sm:space-y-0
+          flex justify-center sm:justify-end gap-2 space-y-0
         "
       >
         <Button type="button" danger disabled={isLoading} onClick={onDelete}>

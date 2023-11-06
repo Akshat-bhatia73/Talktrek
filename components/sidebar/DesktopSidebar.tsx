@@ -1,10 +1,11 @@
 "use client";
 
 import useRoutes from "@/hooks/useRoutes";
-import { useState } from "react";
-import DesktopItem from "./DesktopItem";
 import { User } from "@prisma/client";
+import { useState } from "react";
+import { RiSettings4Line } from "react-icons/ri";
 import Avatar from "../Avatar";
+import DesktopItem from "./DesktopItem";
 import SettingsModal from "./SettingsModal";
 
 interface DesktopSidebarProps {
@@ -12,12 +13,11 @@ interface DesktopSidebarProps {
 }
 
 const DesktopSidebar: React.FC<DesktopSidebarProps> = ({ currentUser }) => {
-  console.log(currentUser);
   const routes = useRoutes();
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
-      <SettingsModal 
+      <SettingsModal
         currentUser={currentUser}
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
@@ -67,11 +67,25 @@ const DesktopSidebar: React.FC<DesktopSidebarProps> = ({ currentUser }) => {
         <nav
           className="
           mt-4
-          flex flex-col justify-between items-center
+          flex flex-col gap-2 justify-between items-center
         "
         >
           <div
             onClick={() => setIsOpen(true)}
+            className="
+            cursor-pointer
+            p-2
+            text-neutral-300
+            hover:text-neutral-100
+            bg-neutral-800 hover:bg-neutral-700
+            rounded-2xl hover:rounded-md
+            transition-all
+
+          "
+          >
+            <RiSettings4Line size={30} />
+          </div>
+          <div
             className="
             cursor-pointer
             transition-all
