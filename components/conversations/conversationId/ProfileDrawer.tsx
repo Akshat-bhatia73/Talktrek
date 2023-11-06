@@ -1,15 +1,14 @@
 "use client";
 
 import Avatar from "@/components/Avatar";
-import Modal from "@/components/Modal";
 import useOtherUser from "@/hooks/useOtherUser";
 import { Dialog, Transition } from "@headlessui/react";
 import { Conversation, User } from "@prisma/client";
 import { format } from "date-fns";
 import { Fragment, useMemo, useState } from "react";
 import { RiCloseLine, RiDeleteBin4Fill } from "react-icons/ri";
-import ConfirmModal from "./ConfirmModal";
 import AvatarGroup from "../AvatarGroup";
+import ConfirmModal from "./ConfirmModal";
 
 interface ProfileDrawerProps {
   data: Conversation & {
@@ -36,12 +35,6 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
     return data.name || otherUser.name;
   }, [data.name, otherUser.name]);
 
-  const status = useMemo(() => {
-    if (data.isGroup) {
-      return `${data.users.length} members`;
-    }
-    return "Active";
-  }, [data]);
   return (
     <>
       <ConfirmModal
@@ -157,9 +150,6 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                             )}
                           </div>
                           <div className="text-neutral-100">{title}</div>
-                          <div className="text-sm text-neutral-400 font-light">
-                            {status}
-                          </div>
                           <div className="flex gap-10 my-8">
                             <div
                               onClick={() => {
@@ -215,7 +205,9 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                                         <Avatar user={user} />
                                         <div>
                                           <h2 className="">{user.name}</h2>
-                                          <p className="text-xs text-neutral-300 font-light">{user.email}</p>
+                                          <p className="text-xs text-neutral-300 font-light">
+                                            {user.email}
+                                          </p>
                                         </div>
                                       </dd>
                                     );
