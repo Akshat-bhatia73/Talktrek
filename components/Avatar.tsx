@@ -2,16 +2,30 @@
 
 import { User } from "@prisma/client";
 import Image from "next/image";
+import { useState } from "react";
+import ImageModal from "./conversations/conversationId/ImageModal";
 
 interface AvatarProps {
   user: User;
 }
 
 const Avatar: React.FC<AvatarProps> = ({ user }) => {
+  const [imageModalOpen, setImageModalOpen] = useState(false);
   return (
-    <div className="relative animate-pop">
+    <>
+      <ImageModal
+        src={user.image || "/images/user.svg"}
+        isOpen={imageModalOpen}
+        onClose={() => setImageModalOpen(false)}
+      />
       <div
-        className="
+        className="relative animate-pop"
+        onClick={() => {
+          setImageModalOpen(true);
+        }}
+      >
+        <div
+          className="
           cursor-pointer
           relative
           rounded-xl hover:rounded-md
@@ -19,19 +33,20 @@ const Avatar: React.FC<AvatarProps> = ({ user }) => {
           h-9 w-9 md:h-11 md:w-11
           transition-all
         "
-      >
-        <Image alt="avatar" src={user?.image || "/images/user.png"} fill />
-      </div>
-      <span
-        className="
+        >
+          <Image alt="avatar" src={user?.image || "/images/user.svg"} fill />
+        </div>
+        <span
+          className="
             absolute top-0 right-0
             block rounded-full
             bg-green-500
             ring ring-neutral-900
             h-2 w-2 md:h-3 md:w-3
         "
-      />
-    </div>
+        />
+      </div>
+    </>
   );
 };
 

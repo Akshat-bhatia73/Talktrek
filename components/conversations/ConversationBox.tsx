@@ -62,7 +62,6 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
 
   return (
     <div
-      onClick={handleClick}
       className={clsx(
         `
         w-full
@@ -70,7 +69,6 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
         flex items-center
         space-x-3 
         py-2 px-3
-        cursor-pointer
         hover:bg-neutral-800 
         rounded-2xl hover:rounded-md 
         transition-all
@@ -78,8 +76,12 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
         selected && "bg-blue-800 hover:bg-blue-700"
       )}
     >
-      {data.isGroup? <AvatarGroup users={data.users} />: <Avatar user={otherUser} />}
-      <div className="min-w-0 flex-1">
+      {data.isGroup ? (
+        <AvatarGroup users={data.users} />
+      ) : (
+        <Avatar user={otherUser} />
+      )}
+      <div className="min-w-0 flex-1 cursor-pointer" onClick={handleClick}>
         <div className="focus:outline-none">
           <div className="flex items-center justify-between mb-1">
             <p className="text-sm font-medium text-neutral-100">
